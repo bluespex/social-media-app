@@ -1,7 +1,8 @@
 const { Router } = require("express");
+const { signup } = require("../../handlers/user/signup");
 
 const route = Router();
 
-route.use("/signup", require("./signup"));
+route.post("/", signup);
 
 module.exports = route;
