@@ -1,8 +1,8 @@
 const { Router } = require("express");
+const { login } = require("../../handlers/user/login");
 
 const route = Router();
 
-route.use("/signup", require("./signup"));
-route.use("/login", require("./login"));
+route.post("/", login);
 
 module.exports = route;
