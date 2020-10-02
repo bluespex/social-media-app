@@ -1,5 +1,6 @@
 const { admin, db } = require("../../utils/admin");
 const { firebase } = require("../../utils/admin");
+const config = require("../../utils/config");
 
 // const firebase = require("firebase");
 const { validSignupData } = require("../../utils/validators");
@@ -17,6 +18,7 @@ exports.signup = (req, res) => {
   const { valid, errors } = validSignupData(newUser);
   if (!valid) return res.status(400).json(errors);
 
+  const noImg = "no-img.png";
   let userId, token;
   db.doc(`/users/${newUser.handle}`)
     .get()
@@ -40,6 +42,7 @@ exports.signup = (req, res) => {
         email: newUser.password,
         createdAt: new Date().toISOString(),
         userId,
+        imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
       };
 
       return db.doc(`/users/${newUser.handle}`).set(userCredentials);
