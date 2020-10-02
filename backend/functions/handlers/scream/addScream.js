@@ -3,7 +3,7 @@ const { db } = require("../../utils/admin");
 exports.postOneScream = (req, res) => {
   const newScream = {
     body: req.body.body,
-    userHandle: req.body.userHandle,
+    userHandle: req.user.userHandle,
     // userImage: req.user.imageUrl,
     createdAt: new Date().toISOString(),
     likeCount: 0,
