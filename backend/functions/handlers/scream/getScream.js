@@ -2,7 +2,8 @@ const { db } = require("../../utils/admin");
 
 exports.getScream = (req, res) => {
   let screamData = {};
-  db.doc(`/screams/${req.query.screamId}`)
+
+  db.doc(`/screams/${req.params.screamId}`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
@@ -10,10 +11,21 @@ exports.getScream = (req, res) => {
       }
       screamData = doc.data();
       screamData.screamId = doc.id;
+      return db
+        .collection("comments")
+        .orderBy("createdAt", "desc")
+        .where("screamId", "==", req.params.screamId)
+        .get();
+    })
+    .then((data) => {
+      screamData.comments = [];
+      data.forEach((doc) => {
+        screamData.comments.push(doc.data());
+      });
       return res.json(screamData);
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).json({ error: err.code });
+      return res.status(500).json({ error: err.code });
     });
 };
