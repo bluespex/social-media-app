@@ -5,7 +5,6 @@ exports.addComment = (req, res) => {
     return res.status(400).json({ comment: "Must not be empty" });
   }
 
-  console.log(req.params);
   const newComment = {
     body: req.body.body,
     createdAt: new Date().toISOString(),
