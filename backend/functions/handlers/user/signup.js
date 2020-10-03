@@ -39,7 +39,7 @@ exports.signup = (req, res) => {
       token = idToken;
       const userCredentials = {
         handle: newUser.handle,
-        email: newUser.password,
+        email: newUser.email,
         createdAt: new Date().toISOString(),
         userId,
         imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
